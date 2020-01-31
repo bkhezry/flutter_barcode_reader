@@ -7,14 +7,12 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import android.view.Menu
-import android.view.MenuItem
 import com.google.zxing.Result
+import com.yourcompany.barcodescan.R
+import kotlinx.android.synthetic.main.activity_barcode_scanner.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
 class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
-  lateinit var scannerView: ZXingScannerView
-
   companion object {
     val REQUEST_TAKE_PHOTO_CAMERA_PERMISSION = 100
     val TOGGLE_FLASH = 200
@@ -22,34 +20,32 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    title = ""
-    scannerView = ZXingScannerView(this)
+    setContentView(R.layout.activity_barcode_scanner)
     scannerView.setAutoFocus(true)
     scannerView.setAspectTolerance(0.5f)
-    setContentView(scannerView)
   }
 
-  override fun onCreateOptionsMenu(menu: Menu): Boolean {
-    if (scannerView.flash) {
-      val item = menu.add(0,
-          TOGGLE_FLASH, 0, "Flash Off")
-      item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-    } else {
-      val item = menu.add(0,
-          TOGGLE_FLASH, 0, "Flash On")
-      item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-    }
-    return super.onCreateOptionsMenu(menu)
-  }
-
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    if (item.itemId == TOGGLE_FLASH) {
-      scannerView.flash = !scannerView.flash
-      this.invalidateOptionsMenu()
-      return true
-    }
-    return super.onOptionsItemSelected(item)
-  }
+//  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//    if (scannerView.flash) {
+//      val item = menu.add(0,
+//          TOGGLE_FLASH, 0, "Flash Off")
+//      item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+//    } else {
+//      val item = menu.add(0,
+//          TOGGLE_FLASH, 0, "Flash On")
+//      item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+//    }
+//    return super.onCreateOptionsMenu(menu)
+//  }
+//
+//  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//    if (item.itemId == TOGGLE_FLASH) {
+//      scannerView.flash = !scannerView.flash
+//      this.invalidateOptionsMenu()
+//      return true
+//    }
+//    return super.onOptionsItemSelected(item)
+//  }
 
   override fun onResume() {
     super.onResume()
@@ -107,20 +103,10 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
 }
 
 object PermissionUtil {
-
-  /**
-   * Check that all given permissions have been granted by verifying that each entry in the
-   * given array is of the value [PackageManager.PERMISSION_GRANTED].
-
-   * @see Activity.onRequestPermissionsResult
-   */
   fun verifyPermissions(grantResults: IntArray): Boolean {
-    // At least one result must be checked.
     if (grantResults.isEmpty()) {
       return false
     }
-
-    // Verify that each required permission has been granted, otherwise return false.
     for (result in grantResults) {
       if (result != PackageManager.PERMISSION_GRANTED) {
         return false
