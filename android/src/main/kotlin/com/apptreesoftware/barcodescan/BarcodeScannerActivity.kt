@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Typeface
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -13,12 +14,15 @@ import kotlinx.android.synthetic.main.activity_barcode_scanner.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
 class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
+  var typeface: Typeface? = null
+
   companion object {
     val REQUEST_TAKE_PHOTO_CAMERA_PERMISSION = 100
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    typeface = Typeface.createFromAsset(this.assets, "fonts/IRANYekanMobileRegular.ttf")
     setContentView(R.layout.activity_barcode_scanner)
     scannerView.setAutoFocus(true)
     scannerView.setAspectTolerance(0.5f)
@@ -28,6 +32,7 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
     backFab.setOnClickListener {
       finish()
     }
+    descriptionTextView.typeface = typeface
   }
 
   override fun onResume() {

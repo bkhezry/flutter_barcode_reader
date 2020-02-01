@@ -35,11 +35,13 @@
                 android:layout_height="0dp" />
 
             <TextView
+                android:id="@+id/descriptionTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/qrcode_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="#0072bc"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
