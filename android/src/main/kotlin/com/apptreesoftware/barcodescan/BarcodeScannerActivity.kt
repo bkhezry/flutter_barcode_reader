@@ -15,7 +15,6 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView
 class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
   companion object {
     val REQUEST_TAKE_PHOTO_CAMERA_PERMISSION = 100
-    val TOGGLE_FLASH = 200
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,29 +22,13 @@ class BarcodeScannerActivity : Activity(), ZXingScannerView.ResultHandler {
     setContentView(R.layout.activity_barcode_scanner)
     scannerView.setAutoFocus(true)
     scannerView.setAspectTolerance(0.5f)
+    flashFab.setOnClickListener {
+      scannerView.toggleFlash()
+    }
+    backFab.setOnClickListener {
+      finish()
+    }
   }
-
-//  override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//    if (scannerView.flash) {
-//      val item = menu.add(0,
-//          TOGGLE_FLASH, 0, "Flash Off")
-//      item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-//    } else {
-//      val item = menu.add(0,
-//          TOGGLE_FLASH, 0, "Flash On")
-//      item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-//    }
-//    return super.onCreateOptionsMenu(menu)
-//  }
-//
-//  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//    if (item.itemId == TOGGLE_FLASH) {
-//      scannerView.flash = !scannerView.flash
-//      this.invalidateOptionsMenu()
-//      return true
-//    }
-//    return super.onOptionsItemSelected(item)
-//  }
 
   override fun onResume() {
     super.onResume()
